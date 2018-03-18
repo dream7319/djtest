@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>django template</title>
+</head>
+<body>
+
+    <ul>
+        {% for item in item_list %}
+{#        {% for item in item_list reversed %} 该列表被反向迭代#}
+            <li>{{ item }}</li>
+        {% empty %} {# 当列表为空时输出以下数据 #}
+            <p>empty</p>
+        {% endfor %}
+    </ul>
+    {{ current_date }}
+    {% if ordered_warranty %}
+        <p>true</p>
+    {% else %}
+        <p>false</p>
+    {% endif %}
+
+
+
+
+</body>
+</html>
