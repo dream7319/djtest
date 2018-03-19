@@ -59,11 +59,5 @@ def detail3(request,questionId):
     question = get_object_or_404(Question,pk=questionId)
     return render(request,'detail.html', {'question': question})
 
-
-
-
-
-
-
-
-
+def demo1(request):
+    pass
