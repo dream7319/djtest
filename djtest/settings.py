@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',      #消息框架
     'django.contrib.staticfiles',   #管理静态文件的框架
     'polls.apps.PollsConfig',       #自己创建的应用
+    'myapp.apps.MyappConfig',
 ]
 
 MIDDLEWARE = [
