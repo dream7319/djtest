@@ -142,3 +142,10 @@ move(4, 'A', 'B', 'C')
 #匿名函数
 sum = lambda arg1, arg2: arg1 + arg2;
 print(sum(10,20))
+
+def now():
+    print("2018-03-24")
+f = now
+print(f())
+print(type(f))
+print(f.__name__)
