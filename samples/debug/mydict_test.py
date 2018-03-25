@@ -3,9 +3,12 @@
 
 import unittest
 
-from mydict import Dict
+from samples.debug.mydict import Dict
 
 class TestDict(unittest.TestCase):
+    #setUp()和tearDown()方法。这两个方法会分别在每调用一个测试方法的前后分别被执行
+    def setUp(self):
+        print("setUp")
 
     def test_init(self):
         d = Dict(a=1, b='test')
@@ -33,6 +36,9 @@ class TestDict(unittest.TestCase):
         d = Dict()
         with self.assertRaises(AttributeError):
             value = d.empty
+
+    def tearDown(self):
+        print("tearDown")
 
 if __name__ == '__main__':
     unittest.main()
