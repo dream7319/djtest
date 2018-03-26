@@ -98,7 +98,7 @@ print("A123".isupper())#True
 print("Abc".isupper())#False
 #----------------------------------------------------
 #join(seq)以指定字符串作为分隔符，将 seq 中所有的元素(的字符串表示)合并为一个新的字符串
-str={'a','b','c'}
+str={'a', 'b', 'c'}
 print("-".join(str))
 str=('a','b','c')
 print("-".join(str))
@@ -122,7 +122,7 @@ print("!!!abc".lstrip('!'))
 intab = "aeiou"
 outtab="12345"
 str = "this is string example....wow!!!"
-trantab = str.maketrans(intab,outtab);
+trantab = str.maketrans(intab, outtab)
 #把str中的aeiou等字符转化为12345
 print(str.translate(trantab))#th3s 3s str3ng 2x1mpl2....w4w!!!
 #----------------------------------------------------
