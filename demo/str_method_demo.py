@@ -16,7 +16,7 @@ print(var2.count('n',0,3))
 #bytes.decode(encoding="utf-8", errors="strict")
 # Python3 中没有 decode 方法，但我们可以使用 bytes 对象的 decode() 方法来解码给定的 bytes 对象，
 # 这个 bytes 对象可以由 str.encode() 来编码返回
-str = "菜鸟教程";
+str = "菜鸟教程"
 #以 encoding 指定的编码格式编码字符串，如果出错默认报一个ValueError 的异常，
 # 除非 errors 指定的是'ignore'或者'replace'
 str_utf8 = str.encode("UTF-8")
