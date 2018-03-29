@@ -26,7 +26,7 @@ print(r.json())
 # print(r.text)
 
 #requests默认使用application/x-www-form-urlencoded对POST数据编码
-r = requests.post('https://accounts.douban.com/login',data={'form_email': 'abc@example.com', 'form_password': '123456'})
+r = requests.post('https://accounts.douban.com/exercise',data={'form_email': 'abc@example.com', 'form_password': '123456'})
 
 #
 # params = {'key': 'value'}
