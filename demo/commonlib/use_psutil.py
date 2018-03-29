@@ -50,7 +50,7 @@ print(p.exe()) # 进程exe路径
 print(p.cwd()) # 进程工作目录
 print(p.cmdline()) # 进程启动的命令行
 print(p.ppid()) # 父进程ID
-print( p.parent())# 父进程
+print(p.parent())# 父进程
 print(p.children()) # 子进程列表
 print(p.status()) # 进程状态
 print(p.username())# 进程用户名
@@ -64,11 +64,6 @@ print(p.num_threads()) # 进程的线程数量
 print(p.threads()) # 所有线程信息
 print(p.environ()) # 进程环境变量
 print(p.terminate()) # 结束进程
-print()
-print()
-print()
-print()
-print()
 
 
 
