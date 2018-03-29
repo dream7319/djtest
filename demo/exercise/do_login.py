@@ -99,14 +99,14 @@ def addLock(username):
     # 锁定输入密码次数过多用户名
     #把用户名从用户列表中删除，添加到lock中
     try:
-        with open('user_list.txt', 'r') as f:
+        with open(file='user_list.txt',mode= 'r') as f:
             lines = f.readlines()
             users = []  # 保存用户名
             for line in lines:
                 users.append(line.strip().split(":")[0])
             index = users.index(username)  # 获取到用户名所在位置
 
-        # 把用户写入到lock中
+        # 把用户追加到lock中
         with open('lock_user.txt', 'a') as f:
             f.writelines("\n%s" % lines[index])
 
