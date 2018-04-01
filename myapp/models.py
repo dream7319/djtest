@@ -15,7 +15,6 @@ class User(models.Model):
     sex = models.CharField(max_length=10,choices=gender, default='男')
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateField(auto_now=True)
-    other_time = models.TimeField(default=None)
 
     def __str__(self):
         return self.name

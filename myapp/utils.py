@@ -9,8 +9,9 @@ __author__ = 'lierl'
 import hashlib
 
 class MD5:
-    def _get_md5(str):
-        h1 = hashlib.md5()
+    def get_md5(str, salt="myapp"):
+        h1 = hashlib.sha256()
+        str += salt
         h1.update(str.encode('utf-8'))
         return h1.hexdigest()
 

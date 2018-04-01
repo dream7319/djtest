@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.sessions.backends.db import SessionStore
@@ -66,7 +67,7 @@ def login(request):
             password = login_form.cleaned_data['password']
             try:
                 user = User.objects.get(name=username)
-                if user.password == password:
+                if user.password == MD5.get_md5(password):
                     request.session['is_login'] = True
                     request.session['user_id'] = user.id
                     request.session['user_name'] = user.name
@@ -79,9 +80,37 @@ def login(request):
     return render(request=request, template_name="login.html", context=locals())
 
 def register(request):
-    pass
+    #首先判断当前用户是否是登录状态，如果是登录状态跳转到首页
+    if request.session.get('is_login', None):
+        return redirect("/%s/index/" % MyappConfig.name)
 
-    return render(request=request, template_name="register.html")
+    if request.method == 'POST':
+        register_form = forms.RegisterForm(request.POST)
+        message = "请检查填写的内容"
+        if register_form.is_valid():
+            # other = register_form.cleaned_data['other']
+            # print(other)
+            username = register_form.cleaned_data['username']
+            password1 = register_form.cleaned_data['password1']
+            password2 = register_form.cleaned_data['password2']
+            email = register_form.cleaned_data['email']
+            sex = register_form.cleaned_data['sex']
+            if password1 == password2:
+                user = User.objects.filter(Q(name=username) | Q(email=email))
+                if not user:
+                    new_user = User.objects.create()
+                    new_user.name = username
+                    new_user.password = MD5.get_md5(password1)
+                    new_user.email = email
+                    new_user.sex = sex
+                    new_user.save()
+                    return redirect("/%s/login/" % MyappConfig.name)
+                else:
+                    message="用户已存在,请重新输入用户名"
+            else:
+                message = "用户名密码不一致"
+    register_form = forms.RegisterForm()
+    return render(request=request, template_name="register.html", context=locals())
 
 def logout(request):
     if not request.session.get('is_login', None):
