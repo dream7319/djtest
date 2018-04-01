@@ -1,0 +1,38 @@
+{
+    "lierl": {
+        "balance": 1502.0,
+        "last_login_time": "2018-04-01 09:34:01",
+        "pwd": "ec34a5f24bbbe82ad0d89ac656674316",
+        "register_time": "2018-04-01 08:36:07",
+        "shopping_list": [
+            {
+                "buy_time": "2018-04-01 08:00:10",
+                "goods_name": "森马",
+                "goods_num": 3
+            },
+            {
+                "buy_time": "2018-04-01 09:34:28",
+                "goods_name": "乐视电视",
+                "goods_num": 2
+            }
+        ]
+    },
+    "test": {
+        "balance": 3951.0,
+        "last_login_time": "2018-04-01 09:50:00",
+        "pwd": "098f6bcd4621d373cade4e832627b4f6",
+        "register_time": "2018-04-01 09:49:50",
+        "shopping_list": [
+            {
+                "buy_time": "2018-04-01 09:50:35",
+                "goods_name": "iPhone6",
+                "goods_num": 1
+            },
+            {
+                "buy_time": "2018-04-01 09:50:56",
+                "goods_name": "真维斯",
+                "goods_num": 10
+            }
+        ]
+    }
+}

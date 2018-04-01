@@ -7,6 +7,5 @@
 '''
 __author__ = 'lierl'
 
-with open('aaa.txt', '+') as f:
-    # print(f.readlines())
-    f.write('bbb')
+
+locals()

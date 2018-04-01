@@ -34,11 +34,12 @@ INSTALLED_APPS = [
     'django.contrib.admin',         #管理站点
     'django.contrib.auth',          #认证系统
     'django.contrib.contenttypes',  #用于内容类型的框架
-    'django.contrib.sessions',      #回话框架
+    'django.contrib.sessions',      #会话框架
     'django.contrib.messages',      #消息框架
     'django.contrib.staticfiles',   #管理静态文件的框架
     'polls.apps.PollsConfig',       #自己创建的应用
     'myapp.apps.MyappConfig',
+    'captcha',#图片验证
 ]
 
 MIDDLEWARE = [
@@ -110,8 +111,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
+#zh-hans
+#en-us
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -126,3 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+# ]
