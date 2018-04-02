@@ -13,9 +13,15 @@ __author__ = 'lierl'
 import pickle
 d = dict(name='bob', age=20, score=88)
 print(pickle.dumps(d))#把任意对象序列化为一个bytes
-f = open("test.txt", mode='wb')
-pickle.dump(d, f)#把序列化之后的bytes写入文件
-f.close()
+pickle_data = b'\x80\x03}q\x00(X\x04\x00\x00\x00nameq\x01X\x03\x00\x00\x00bobq\x02X\x05\x00\x00\x00scoreq\x03KXX\x03\x00\x00\x00ageq\x04K\x14u.'
+pickle_loads = pickle.loads(pickle_data)
+print(type(pickle_loads))
+print(pickle_loads)
+
+d = dict(name='bob', age=20, score=88)
+with open("test.txt", mode='wb') as f:
+    pickle.dump(d, f)#把序列化之后的bytes写入文件
+    f.close()
 f = open("test.txt", mode='rb')
 content = pickle.load(f)
 f.close()
@@ -47,16 +53,17 @@ def student2dic(std):
         'age': std.age,
         'score': std.score
     }
-
-print(json.dumps(s, default=student2dic))
+data = json.dumps(s, default=student2dic)
+# print(json.dumps(s))
+print("-->", type(data))
 data = json.dumps(s, default=lambda obj:obj.__dict__)
 print("-->", type(data))
 
 json_str = '{"age": 29, "name": "lierl", "score": 99}'
 def dic2student(d):
     return Student(d['name'], d['age'], d['score'])
-
-print(json.loads(json_str, object_hook=dic2student))#反序列化
+data = json.loads(json_str, object_hook=dic2student)
+print(type(data))#反序列化
 
 stu = json.loads(json_str, object_hook=lambda d:Student(d['name'], d['age'], d['score']))
 print(stu.name)
