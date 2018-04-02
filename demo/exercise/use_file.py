@@ -8,7 +8,11 @@
 __author__ = 'lierl'
 import datetime
 
-print(datetime.datetime.now() + datetime.timedelta(7))
+class TestA:
+    def aa(self,aa):
+        print(aa)
+        print(datetime.datetime.now() + datetime.timedelta(7))
+
 
 
 
