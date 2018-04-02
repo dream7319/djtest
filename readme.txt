@@ -7,6 +7,10 @@
     创建能够登录管理站点的用户
     http://localhost:8002/admin/
 
+7、创建项目依赖文件：pip freeze  > ./requirements.txt
+8、导入第三方依赖库：pip install -r requirements.txt
+
+
 
 
 

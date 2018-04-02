@@ -1,12 +1,12 @@
-from django.db.models import Q
 from django.shortcuts import render, redirect
-from django.core.handlers.wsgi import WSGIRequest
-from django.contrib.sessions.backends.db import SessionStore
 # Create your views here.
-from myapp.models import User
-from myapp.utils import MD5
+from myapp.models import User, ConfirmString
+from myapp.utils import get_md5, send_email
 from myapp import forms
 from myapp.apps import MyappConfig
+import datetime
+from djtest import settings
+from django.http import HttpResponse
 
 def index(request):
     # type(request) <class 'django.core.handlers.wsgi.WSGIRequest'>
@@ -38,7 +38,7 @@ def login1(request):
             '''
             username = username.strip()
             try:
-                user = User.objects.get(name = username)
+                user = User.objects.get(name=username)
             except:
                 return render(request=request, template_name="login.html", context={"error": "用户名或密码不正确"})
             if user.password == password:
@@ -67,7 +67,7 @@ def login(request):
             password = login_form.cleaned_data['password']
             try:
                 user = User.objects.get(name=username)
-                if user.password == MD5.get_md5(password):
+                if user.password == get_md5(password):
                     request.session['is_login'] = True
                     request.session['user_id'] = user.id
                     request.session['user_name'] = user.name
@@ -78,6 +78,15 @@ def login(request):
                 message = "用户不存在！"
     login_form = forms.UserForm()
     return render(request=request, template_name="login.html", context=locals())
+
+#创建确认码
+def make_confirm_string(user):
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    code = get_md5(user.name, now)
+
+    ConfirmString.objects.create(code=code, user=user)
+    return code
+
 
 def register(request):
     #首先判断当前用户是否是登录状态，如果是登录状态跳转到首页
@@ -96,15 +105,25 @@ def register(request):
             email = register_form.cleaned_data['email']
             sex = register_form.cleaned_data['sex']
             if password1 == password2:
-                user = User.objects.filter(Q(name=username) | Q(email=email))
-                if not user:
-                    new_user = User.objects.create()
-                    new_user.name = username
-                    new_user.password = MD5.get_md5(password1)
-                    new_user.email = email
-                    new_user.sex = sex
-                    new_user.save()
-                    return redirect("/%s/login/" % MyappConfig.name)
+                sample_name_user = User.objects.filter(name=username)
+                print(type(sample_name_user))
+                if not sample_name_user:
+                    sample_email_user = User.objects.filter(email=email)
+                    if not sample_email_user:
+                        new_user = User.objects.create()
+                        new_user.name = username
+                        new_user.password = get_md5(password1)
+                        new_user.email = email
+                        new_user.sex = sex
+                        new_user.save()
+
+                        code = make_confirm_string(new_user)#创建确认码
+                        send_email(email, code)
+                        message = '请前往注册邮箱，进行邮件确认！'
+                        app_name = MyappConfig.name
+                        return render(request=request, template_name="confirm.html", context=locals())
+                    else:
+                        message = '该邮箱地址已被注册，请使用别的邮箱！'
                 else:
                     message="用户已存在,请重新输入用户名"
             else:
@@ -122,3 +141,53 @@ def logout(request):
     # del request.session['user_id']
     # del request.session['user_name']
     return redirect("/%s/login/" % MyappConfig.name)
+
+#邮件确认
+def confirm(request):
+    '''
+    说明：
+    1、通过request.GET.get('code', None)从请求的url地址中获取确认码;
+    2、先去数据库内查询是否有对应的确认码;
+    3、如果没有，返回confirm.html页面，并提示;
+    4、如果有，获取注册的时间create_time，加上设置的过期天数，这里是7天，然后与现在时间点进行对比；
+    5、如果时间已经超期，删除注册的用户，同时注册码也会一并删除，然后返回confirm.html页面，并提示;
+    6、如果未超期，修改用户的has_confirmed字段为True，并保存，表示通过确认了。然后删除注册码，但不删除用户本身。最后返回confirm.html页面，并提示。
+
+    :param request:
+    :return:
+    '''
+    #http://127.0.0.1:8001/myapp/confirm?code=7eb6b746c3e202769ea797153da7ba2832f13462208e0b8c61bfcb266888098a
+    code = request.GET.get('code', None)
+    message = ''
+    try:
+        confirm = ConfirmString.objects.get(code=code)
+        create_time = confirm.create_time
+        now = datetime.datetime.now()
+        # 判断是否有效
+        if now < create_time + datetime.timedelta(settings.CONFIRM_DAYS):
+            confirm.user.has_confirmed = True
+            confirm.user.save()
+            confirm.delete()
+            message = "感谢确认，请使用账户登录！"
+        else:
+            confirm.user.delete()
+            message = '您的邮件已经过期！请重新注册!'
+    except:
+        message = '无效的确认请求!'
+    app_name = MyappConfig.name
+    return render(request, 'confirm.html', locals())
+
+def testQuery(request):
+    # try:
+    user1 = User.objects.get(name="zhangsan")
+    user2 = User.objects.filter(name="zhangsan")
+    user3 = User.objects.filter(name="zhangsan1")
+    print(type(user1))
+    print(type(user2))
+    print(user3)
+    print([type(p) for p in user2])
+    import json
+    # print(json.dumps(user1, default=lambda obj:obj.__dict__))
+    # except DoesNotExist as e:
+    #     pass
+    return HttpResponse("helloworld")

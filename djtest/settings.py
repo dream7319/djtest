@@ -116,12 +116,9 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'Asia/Shanghai'
-
+USE_TZ = False
 USE_I18N = True
-
 USE_L10N = True
-
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -132,3 +129,13 @@ STATIC_URL = '/static/'
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, "static"),
 # ]
+
+#----------------------------------------------------------
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'#指定发送邮件的后端模块
+EMAIL_HOST = 'smtp.163.com'#发送方的smtp服务器地址
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'lierlei0515@163.com'
+EMAIL_HOST_PASSWORD = 'erlei0515'
+
+CONFIRM_DAYS=7#确认时间,超过7天邮件过期
+
