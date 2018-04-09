@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',       #自己创建的应用
     'myapp.apps.MyappConfig',
     'captcha',#图片验证
+    'djangostudy.apps.DjangostudyConfig',#django学习应用
 ]
 
 MIDDLEWARE = [
