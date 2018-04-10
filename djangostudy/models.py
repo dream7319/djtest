@@ -24,6 +24,25 @@ class Album(models.Model):
     release_date = models.DateField()
     num_stars = models.IntegerField()
 
+class Group(models.Model):
+    name = models.CharField(max_length=128)
+    #添加models.ManyToManyField(Person) 默认会生成第三张表,可以通过through来自定义指定第三张表
+    members = models.ManyToManyField(Person, through="MemberShip")
 
+class MemberShip(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    date_join = models.DateField()
+    invite_reason = models.CharField(max_length=64)
 
+class User(models.Model):
+    name = models.CharField(max_length=20)
 
+class Role(models.Model):
+    name = models.CharField(max_length=20)
+    user = models.ManyToManyField(User, through="UserRole")
+
+class UserRole(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    create_time = models.DateField()
