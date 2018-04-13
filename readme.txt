@@ -10,6 +10,11 @@
 7、创建项目依赖文件：pip freeze  > ./requirements.txt
 8、导入第三方依赖库：pip install -r requirements.txt
 
+用于WEB开发的Django/Flask，
+用于科学计算的 Numpy/Scipy，
+用于机器学习的 Scikit-Learn，
+用于运维的 Supervisor/Fabric，
+用于网络爬虫的 BeautifulSoup/Scrapy
 
 
 
