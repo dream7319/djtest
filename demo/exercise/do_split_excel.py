@@ -16,27 +16,31 @@ savebook = "e:\\files"
 data = xlrd.open_workbook(readbook)
 # 获取sheet
 table = data.sheets()[0]
+
 # 行数
 nrows = table.nrows
 # 列数
 ncols = table.ncols
 
-sheets = nrows / limit
+sheets = nrows / limit#总共需要多少excel
 
 if not sheets.is_integer():
     sheets = sheets + 1
 
-
-workbook = xlwt.Workbook(encoding='ascii')
-
+title_row = table.row_values(0)
+#
 for i in range(0, int(sheets)):
-    worksheet = workbook.add_sheet(0)
-    for row in range(1, limit):
-        row_content = table.row_values(limit)
-        print(row_content)
-        # for col in range(0, ncols):
-        #     worksheet.write(row, col, row_content[col])
-    # workbook.save(savebook+"\\"+str(i)+".xlsx")
+    workbook = xlwt.Workbook(encoding='ascii')
+    worksheet = workbook.add_sheet(sheetname="0")
+    for col in range(0,ncols):
+        worksheet.write(0, col, title_row[col])
+    for row in range(1, limit+1):#每次循环limit行
+        newRow = row+limit*i
+        if newRow < nrows:
+            row_content = table.row_values(newRow)
+            for col in range(0, ncols):
+                worksheet.write(row, col, row_content[col])
+    workbook.save(savebook+"\\"+str(i)+".xlsx")
 
 
 
