@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'myapp.apps.MyappConfig',
     'captcha',#图片验证
     'djangostudy.apps.DjangostudyConfig',#django学习应用
-    'djangodemo.apps.DjangodemoConfig',
 ]
 
 MIDDLEWARE = [
