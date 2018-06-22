@@ -1,1 +1,3 @@
-hello world!!!
+"stu1_info":{"name":"jack","age":"18"}
+"stu2_info":{"name":"rain","age":"21"}
+"stu3_info":{"name":"tom","age":"34"}

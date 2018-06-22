@@ -23,12 +23,23 @@ class User(BaseModel):
     id = Column('id',Integer,primary_key=True,autoincrement=True)
     name = Column("user_name",String(20))#数据库中的字段名称为：user_name
     age = Column('age', Integer)
+
+    role_id = Column('role_id',Integer)
     #方便输出，我们打印user时调用此方法
     def __repr__(self):
         return "id:%d,name:%s,age:%d" % (self.id, self.name, self.age)
 # 为了方便输出
 # def print_user(user):
 #     return "id:%d,name:%s,age:%d" % (user.id, user.name, user.age)
+
+class Role(BaseModel):
+    # 表名
+    __tablename__ = 'role'
+    id = Column('id', Integer, primary_key=True, autoincrement=True)
+    name = Column("role_name", String(20))
+
+    def __repr__(self):
+        return self.name
 
 sql_connect = "mysql://root:root@139.199.129.251/blogdb?charset=utf8"
 #创建连接数据库引擎
@@ -52,11 +63,18 @@ def addUser():
     # 创建session对象,相当于MySQLdb里面的游标
     session = DBsession()
     # 创建新User对象:
-    new_user1 = User(name='zhangsan', age=18)
-    new_user2 = User(name='lisi', age=12)
+    new_user1 = User(name='zhangsan', age=18, role_id=1)
+    new_user2 = User(name='lisi', age=12,role_id=1)
+    new_user3 = User(name="zhaoliu", age=24,role_id=2)
     # 添加到session:
     session.add(new_user1)
     session.add(new_user2)
+    session.add(new_user3)
+
+    role1 = Role(name="超级管理员")
+    role2 = Role(name="一般管理员")
+    session.add(role1)
+    session.add(role2)
     # 提交即保存到数据库
     session.commit()
     # 关闭session
@@ -122,10 +140,40 @@ def execute():
     session.commit()
     # 关闭session
     session.close()
-execute()
+# execute()
+
+
+def use_in():
+    session = DBsession()
+    users = session.query(User).filter(User.name.in_(['zhangsan','lisi'])).all()
+    print([user for user in users])
+
+# use_in()
+
+def use_count():
+    session = DBsession()
+    count = session.query(User).filter().count()
+    print(count)
+
+# use_count()
+
+from sqlalchemy import func
+
+def use_group():
+    session = DBsession()
+    users = session.query(User.age,func.count(User.age)).group_by(User.age).all()
+    print([user for user in users])
+
+# use_group()
 
 
 
+def use_relation_query():
+    session = DBsession()
+    user_role_datas = session.query(User,Role).filter(User.role_id == Role.id).all()
+    print([user_role_data for user_role_data in user_role_datas])
+
+use_relation_query()
 
 
 

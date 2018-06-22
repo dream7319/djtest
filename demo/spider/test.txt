@@ -1,0 +1,245 @@
+
+    $.ajaxSetup({
+        async: false
+    });
+    // 检验登录状态
+    function checkLogin() {
+        if (user === null) {
+            window.location.href = '/login';
+        }
+    }
+    var authorId = 355;
+    var articleId = 1035;
+    var type = 0;
+    var app = new Vue({
+        el: '#app',
+        data: {
+            article: {"type":0,"userId":355,"nickname":null,"avatar":"https:\/\/avatars2.githubusercontent.com\/u\/12627956?v=4","id":1035,"title":" Spring \u6E90\u7801\u5BFC\u8BFB","description":"\u505A\u4E3AJava\u5F00\u6E90\u4E16\u754C\u7684\u7B2C\u4E00\u6846\u67B6,Spring\u5DF2\u7ECF\u6210\u4E3A\u4E8B\u5B9E\u4E0A\u7684Java EE\u5F00\u53D1\u6807\u51C6Spring\u6846\u67B6\u6700\u6839\u672C\u7684\u4F7F\u547D\u662F\u7B80\u5316Java\u5F00\u53D1,\u56E0\u6B64\u5B66\u4E60\u3001\u7814\u7A76\u3001\u638C\u63E1Spring\u6846\u67B6\u6210\u4E3A\u6BCF\u4E00\u4F4DJava\u5F00\u53D1\u4EBA\u5458\u7684\u5FC5\u4FEE\u8BFE\u3002\u800C\u9605\u8BFB\u6E90\u7801\u5219\u662F\u5B66\u4E60Spring\u7684\u6700\u597D\u65B9\u5F0F\u4E4B\u4E00\u3002\nSpr","read":797,"comment":0,"like":11,"category":"\u7EFC\u5408","categoryId":"1","recommended":null,"createTime":"2018-04-19 08:24:13.0","tag":"Spring,Java,\u6E90\u7801,APP,","tagSet":["Java","APP","Spring","\u6E90\u7801"],"contentMd":null,"contentHtml":"<p>\u505A\u4E3AJava\u5F00\u6E90\u4E16\u754C\u7684\u7B2C\u4E00\u6846\u67B6,Spring\u5DF2\u7ECF\u6210\u4E3A\u4E8B\u5B9E\u4E0A\u7684Java EE\u5F00\u53D1\u6807\u51C6Spring\u6846\u67B6\u6700\u6839\u672C\u7684\u4F7F\u547D\u662F\u7B80\u5316Java\u5F00\u53D1,\u56E0\u6B64\u5B66\u4E60\u3001\u7814\u7A76\u3001\u638C\u63E1Spring\u6846\u67B6\u6210\u4E3A\u6BCF\u4E00\u4F4DJava\u5F00\u53D1\u4EBA\u5458\u7684\u5FC5\u4FEE\u8BFE\u3002\u800C\u9605\u8BFB\u6E90\u7801\u5219\u662F\u5B66\u4E60Spring\u7684\u6700\u597D\u65B9\u5F0F\u4E4B\u4E00\u3002<br>Spring \u91CC\u9762\u6700\u91CD\u8981\u7684\u7279\u6027\u5C31\u662F Ioc\uFF0C\u53EF\u80FD\u4F60\u8FD8\u4F1A\u8BF4 aop\u3002\u5176\u5B9E aop \u7684\u5B9E\u73B0\u4E5F\u662F\u57FA\u4E8E ioc\u3002Ioc (Inversion of Control)\uFF0C\u5373\u201C\u63A7\u5236\u53CD\u8F6C\u201D\uFF0C\u4E0D\u662F\u4EC0\u4E48\u6280\u672F\uFF0C\u800C\u662F\u4E00\u79CD\u8BBE\u8BA1\u601D\u60F3\u3002\u5728Java\u5F00\u53D1\u4E2D\uFF0CIoc\u610F\u5473\u7740\u5C06\u4F60\u8BBE\u8BA1\u597D\u7684\u5BF9\u8C61\u4EA4\u7ED9\u5BB9\u5668\u63A7\u5236\uFF0C\u800C\u4E0D\u662F\u4F20\u7EDF\u7684\u5728\u4F60\u7684\u5BF9\u8C61\u5185\u90E8\u76F4\u63A5\u63A7\u5236\u3002<\/p>\n<p>\u5173\u4E8E Spring IOC \u6E90\u7801\u5206\u6790\u7684\u6587\u7AE0\u7F51\u4E0A\u5F88\u591A\uFF0C\u73B0\u5728\u6211\u5C31\u6765\u53E6\u8F9F\u8E4A\u5F84\u3002Spring Ioc \u7684\u5BF9\u8C61\u626D\u8F6C\u4EE5\u53CA \u6D89\u53CA\u5230\u7684\u6838\u5FC3\u63A5\u53E3\u6765\u5206\u6790\u4E00\u4E0B\u5B83\u7684\u6E90\u7801\u5B9E\u73B0\u3002<\/p>\n<p>\u6211\u628A Spring Ioc \u7684\u5BF9\u8C61\u8F6C\u6362\u5206\u4E3A\u4EE5\u4E0B 4 \u4E2A\u6B65\u9AA4\uFF1A<\/p>\n<blockquote>\n<p>Resource -\u0026gt; BeanDefinition -\u0026gt; BeanWrapper -\u0026gt; Object<\/p>\n<\/blockquote>\n<h3 id=\"1-resource\">1 Resource<\/h3>\n<p>Resouce \u5176\u5B9E\u662F\u4E00\u4E2A\u63A5\u53E3\uFF0C\u4EE3\u8868\u7684\u662F\u8D44\u6E90\uFF0C\u5728\u8BA1\u7B97\u673A\u91CC\u9762\u4ECE\u4E00\u4E2A\u5730\u65B9\u79FB\u52A8\u5230\u53E6\u5916\u4E00\u4E2A\u5730\u65B9\u6240\u9700\u8981\u7684\u4E1C\u897F\u5C31\u662F\u6570\u636E\u6D41\uFF0C\u6240\u4EE5 Resource \u5B9E\u73B0\u4E86 InputStreamSource \u63A5\u53E3\uFF0C\u901A\u8FC7 InputStreamSource \u63A5\u53E3\u53EF\u4EE5\u83B7\u53D6\u5230 Inputstream\uFF0C\u8FD9\u6837\u5C31\u53EF\u4EE5\u8BFB\u53D6\u4E0D\u540C\u7684 Bean \u5B9A\u4E49\u4E86\u3002<\/p>\n<pre><code>public interface InputStreamSource {\n    InputStream getInputStream() throws IOException;\n}\n<\/code><\/pre><p>Spring \u53EF\u4EE5\u5B9A\u4E49\u4E0D\u540C\u7C7B\u578B\u7684 bean\uFF0C\u6700\u540E\u90FD\u53EF\u4EE5\u5C01\u88C5\u6210 Resource \u901A\u8FC7 IO \u6D41\u8FDB\u884C\u8BFB\u53D6\u3002 Spring \u53EF\u4EE5\u5B9A\u4E49\u7C7B\u578B\u7684 bean \u5BF9\u8C61\uFF1A<\/p>\n<ul>\n<li>XML\uFF1A\u8FD9\u662F Spring \u6700\u5F00\u59CB\u5B9A\u4E49 bean \u7684\u5F62\u5F0F<\/li>\n<li>Annotation \uFF1A\u7531\u4E8E\u901A\u8FC7 XML \u5B9A\u4E49 bean \u7684\u7E41\u7410\uFF0CSpring \u8FDB\u884C\u4E86\u6539\u8FDB\u53EF\u4EE5\u901A\u8FC7 @Component \u4EE5\u53CA\u57FA\u4E8E\u5B83\u7684\u6CE8\u89E3\u6765\u5B9A\u4E49 bean\u3002\u4F8B\u5982\uFF1A@Service\uFF0C@Controller\u7B49\u7B49\uFF0C\u5B83\u4EEC\u90FD\u53EF\u4EE5\u5B9A\u4E49 bean \uFF0C\u53EA\u4E0D\u8FC7\u8BED\u4E49\u66F4\u52A0\u660E\u786E\u3002<\/li>\n<li>Class\uFF1A\u901A\u8FC7 @Configuration \u4E0E @Bean \u6CE8\u89E3\u5B9A\u4E49\uFF0C@Configuration \u4EE3\u7406 xml \u8D44\u6E90\u6587\u4EF6\uFF0C\u800C @Bean \u4EE3\u66FF <code>\u0026lt;bean\u0026gt;<\/code> \u6807\u7B7E\u3002<\/li>\n<li>Properties\/yml\uFF1A\u901A\u8FC7 @EnableConfigurationProperties \u4E0E @ConfigurationProperties \u6765\u5B9A\u4E49 bean\u3002\u8FD9\u79CD\u5F62\u5F0F\u5728 Spring boot \u81EA\u52A8\u6CE8\u5165\u91CC\u9762\u5927\u91CF\u4F7F\u7528\u3002<\/li>\n<\/ul>\n<h3 id=\"2-beandefinition\">2\u3001BeanDefinition<\/h3>\n<p>\u671B\u6587\u751F\u4E49\uFF0C\u5F88\u663E\u793A\u8FD9\u4E2A\u662F Bean \u5BF9\u8C61\u7684\u5B9A\u4E49\u3002 Spring \u901A\u8FC7\u4E0D\u540C\u5F62\u5F0F\u6765\u5B9A\u4E49 bean\uFF0C\u6700\u7EC8\u4F1A\u628A\u8FD9\u4E9B\u5B9A\u4E49\u8F6C\u5316\u6210 BeanDefinition \u4FDD\u5B58\u5728 Spring \u5BB9\u5668\u5F53\u4E2D\u8FDB\u884C\u4F9D\u8D56\u6CE8\u5165\u3002\u4E0B\u9762\u6211\u4EEC\u6765\u770B\u4E00\u4E0B BeanDefinition \u7684\u63A5\u53E3\u5B9A\u4E49\u3002<\/p>\n<pre><code>public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {\n\n    ConstructorArgumentValues getConstructorArgumentValues();\n\n    MutablePropertyValues getPropertyValues();\n\n}\n<\/code><\/pre><p>\u8FD9\u4E2A\u63A5\u53E3\u7684\u5B9A\u4E49\u5F88\u590D\u6742\u4F46\u662F\uFF0C\u5BF9\u4E8E\u521D\u59CB\u7406\u89E3 spring ioc\uFF0C\u53EA\u9700\u8981\u5173\u5FC3\u4E24\u4E2A\u65B9\u6CD5\u3002<\/p>\n<ul>\n<li>getConstructorArgumentValues\uFF1A\u83B7\u53D6\u6784\u9020\u5668\u6CE8\u5165\u5B9A\u4E49\u7684\u53C2\u6570\u3002<\/li>\n<li>getPropertyValues\uFF1A\u83B7\u53D6 setter \u6CE8\u5165\u5B9A\u4E49\u7684\u53C2\u6570\u3002<\/li>\n<\/ul>\n<p>\u6240\u4EE5 Spring \u652F\u6301\u6784\u9020\u5668\u6CE8\u5165\u4E0E setter \u4F9D\u8D56\u6CE8\u5165\u3002<\/p>\n<blockquote>\n<p>1\u3001\u6784\u9020\u5668\u6CE8\u5165<\/p>\n<\/blockquote>\n<pre><code>\u0026lt;bean id=\u0026quot;exampleBean\u0026quot; class=\u0026quot;examples.ExampleBean\u0026quot;\u0026gt;\n    \u0026lt;constructor-arg type=\u0026quot;int\u0026quot; value=\u0026quot;7500000\u0026quot;\/\u0026gt;\n    \u0026lt;constructor-arg type=\u0026quot;java.lang.String\u0026quot; value=\u0026quot;42\u0026quot;\/\u0026gt;\n\u0026lt;\/bean\u0026gt;\n<\/code><\/pre><blockquote>\n<p>2\u3001setter\u6CE8\u5165<\/p>\n<\/blockquote>\n<pre><code>\u0026lt;bean id=\u0026quot;exampleBean\u0026quot; class=\u0026quot;examples.ExampleBean\u0026quot;\u0026gt;\n    \u0026lt;!-- setter injection using the nested ref element --\u0026gt;\n    \u0026lt;property name=\u0026quot;beanOne\u0026quot;\u0026gt;\n        \u0026lt;ref bean=\u0026quot;anotherExampleBean\u0026quot;\/\u0026gt;\n    \u0026lt;\/property\u0026gt;\n\n    \u0026lt;!-- setter injection using the neater ref attribute --\u0026gt;\n    \u0026lt;property name=\u0026quot;beanTwo\u0026quot; ref=\u0026quot;yetAnotherBean\u0026quot;\/\u0026gt;\n    \u0026lt;property name=\u0026quot;integerProperty\u0026quot; value=\u0026quot;1\u0026quot;\/\u0026gt;\n\u0026lt;\/bean\u0026gt;\n\n\u0026lt;bean id=\u0026quot;anotherExampleBean\u0026quot; class=\u0026quot;examples.AnotherBean\u0026quot;\/\u0026gt;\n\u0026lt;bean id=\u0026quot;yetAnotherBean\u0026quot; class=\u0026quot;examples.YetAnotherBean\u0026quot;\/\u0026gt;\n<\/code><\/pre><h3 id=\"3-beanwapper\">3\u3001BeanWapper<\/h3>\n<p>\u5176\u5B9E\u4EC0\u4E48\u662F\u4F9D\u8D56\u6CE8\u5165\uFF0C\u7B80\u5355\u6765\u8BF4\u5C31\u662F Spring \u5E2E\u6211\u4EEC\u521B\u5EFA\u5BF9\u8C61\u3002\u628A\u521B\u5EFA\u5BF9\u8C61\u5199\u6B7B\u5728 Java \u6587\u4EF6\u53D8\u6210\u4E86\u901A\u8FC7\u4E0D\u540C\u7684 Spring \u914D\u7F6E\u53EF\u4EE5\u6CE8\u5165\u4E0D\u540C\u7684\u503C\u3002\u521B\u5EFA\u5BF9\u8C61\u7684\u804C\u8D23\u7531 Java \u6587\u4EF6\u53D8\u6210\u4E86 Spring \u914D\u7F6E\u6587\u4EF6\u3002<\/p>\n<p>\u4E0B\u9762\u6211\u5C31\u95EE\u4E00\u4E2A\u7B80\u5355\u7684\u95EE\u9898\uFF0C\u5982\u4F55\u521B\u5EFA\u5BF9\u8C61\u3002\u53EF\u80FD\u5927\u5BB6\u5475\u5475\u4E00\u7B11\uFF0C\u521B\u5EFA\u5BF9\u8C61\u8FD9\u8FD8\u4E0D\u7B80\u5355\u3002<\/p>\n<blockquote>\n<p>1\u3001\u65E0\u53C2\u6784\u9020\u5668<\/p>\n<\/blockquote>\n<pre><code>Object obj = new Object();\nobj.setXxx(xxx);\n<\/code><\/pre><blockquote>\n<p>2\u3001\u6709\u53C2\u6784\u9020\u5668<\/p>\n<\/blockquote>\n<pre><code>Object obj = new Object(xxx, yyyy);\nobj.setXxx(xxx);\n<\/code><\/pre><p><strong>\u5176\u5B9E Spring \u4E5F\u662F\u8FD9\u6837\u6765\u521B\u5EFA\u5BF9\u8C61\u7684\uFF0C\u4E0D\u4FE1\u8BB2\u770B<\/strong> : (\u5165\u53E3\u65B9\u6CD5 <code>BeanFactory#getBean<\/code>)<\/p>\n<ol>\n<li>AbstractAutowireCapableBeanFactory#createBeanInstance() \uFF1A\u901A\u8FC7\u53CD\u5C04 Constructor \u8C03\u7528\u914D\u7F6E\u7684\u65E0\u53C2\u6216\u8005\u6709\u53C2\u6765\u521B\u5EFA\u5BF9\u8C61\u5B9E\u4F8B\u3002\u901A\u8FC7 BeanDefinition#getConstructorArgumentValues \u83B7\u53D6\uFF0C\u5E76\u8FD4\u56DE BeanWrapper \u5BF9\u8C61\u3002<\/li>\n<li>AbstractAutowireCapableBeanFactory#populateBean()\uFF1A\uFF0C\u83B7\u53D6\u5230\u5B9A\u4E49\u7684 bean \u751F\u6210\u7684\u6240\u6709\u7684\u5B9A\u4E49\u7684setter\u6CE8\u5165\u7684\u5C5E\u6027(BeanDefinition#getPropertyValues)\uFF0C\u7136\u540E\u904D\u5386\u4E9B\u8FD9\u4E9B\u5C5E\u6027\uFF0C\u901A\u8FC7\u5185\u7701\u83B7\u53D6\u5230\u5BF9\u8C61\u6240\u6709\u7684 \u5C5E\u6027\u63CF\u8FF0\u5668(PropertyDescriptor)\uFF0C\u83B7\u53D6\u5230\uFF0C\u5C5E\u6027\u7684 PropertyDescriptor#getWriteMethod \u65B9\u6CD5\uFF0C\u4E5F\u5C31\u662F setter \u65B9\u6CD5\uFF0C\u4F9D\u8D56\u6CE8\u5165\u503C\u3002\u5982\u679C\u662F\u666E\u901A\u5C5E\u6027\u6216\u8005\u4E00\u4E9B\u590D\u6742\u5BF9\u8C61\uFF0C\u6BD4\u5982\u666E\u901A\u5C5E\u6027 String, int, long \u6216\u8005 classpath:*\u8F6C\u6362\u4E3A Resource \u590D\u6742\u5BF9\u8C61\u7B49\u7B49\uFF0C\u76F4\u63A5\u6CE8\u5165\u5373\u53EF;\u5BF9\u4E8E\u5F15\u7528\u7C7B\u578B\u5BF9\u8C61\uFF0C\u7EE7\u7EED\u4F9D\u8D56\u6CE8\u5165\u76F4\u5230\u6240\u6709\u7684\u5C5E\u6027\u662F\u666E\u901A\u5C5E\u6027\u4E3A\u6B62\u3002<\/li>\n<li>AbstractAutowireCapableBeanFactory#initializeBean()\uFF1A\u8C03\u7528 Spring \u81EA\u5B9A\u4E49\u7684\u521D\u59CB\u5316\u65B9\u6CD5\u6BD4\u5982\uFF1ABeanPostProcessor \u6269\u5C55\u4EE5\u53CA init-method\u3002<\/li>\n<\/ol>\n<p>\u5B9E\u4F8B\u5316\u5BF9\u8C61\u8FD4\u56DE BeanWrapper\uFF0C\u5176\u5B9E\u662F\u4E3A\u4E86\u4F9D\u8D56\u6CE8\u5165\u670D\u52A1\u4E5F\u5C31\u662F\u4E0A\u9762\u7684\u7B2C\u4E8C\u6B65\u3002 \u8FD9\u4E2A\u63A5\u53E3\u7684\u529F\u80FD\u8FD8\u662F\u5F88\u590D\u6742\u7684\uFF0C\u5B83\u7EE7\u627F\u4E86 4 \u4E2A\u63A5\u53E3\u3002<\/p>\n<ul>\n<li>TypeConverter<\/li>\n<li>PropertyEditorRegistry<\/li>\n<li>PropertyAccessor<\/li>\n<li>ConfigurablePropertyAccessor<\/li>\n<\/ul>\n<p>\u4E0B\u9762\u5C31\u6765\u5206\u522B\u4ECB\u7ECD\u4E00\u4E0B\u8FD9\u4E9B\u63A5\u53E3\u7684\u529F\u80FD\u3002<\/p>\n<h4 id=\"3-1-typeconverter\">3.1 TypeConverter<\/h4>\n<p>\u4E0B\u9762\u5C31\u662F\u8FD9\u4E2A\u63A5\u53E3\u7684\u5B9A\u4E49\u3002<\/p>\n<pre><code>public interface TypeConverter {\n\n    \u0026lt;T\u0026gt; T convertIfNecessary(Object value, Class\u0026lt;T\u0026gt; requiredType) throws TypeMismatchException;\n\n    \u0026lt;T\u0026gt; T convertIfNecessary(Object value, Class\u0026lt;T\u0026gt; requiredType, MethodParameter methodParam)\n            throws TypeMismatchException;\n\n    \u0026lt;T\u0026gt; T convertIfNecessary(Object value, Class\u0026lt;T\u0026gt; requiredType, Field field)\n            throws TypeMismatchException;\n\n}\n<\/code><\/pre><p>\u5B83\u7684\u4F5C\u7528\u5C31\u662F\u81EA\u52A8\u7C7B\u578B\u8F6C\u6362\uFF0C\u56E0\u4E3A Spring \u4F5C\u5F97\u592A\u65E0\u611F\u77E5\u4E86\u3002\u4F60\u4E5F\u8BB8\u8FD8\u6CA1\u6709\u611F\u89C9\u5230\u5B83\u7684\u5B58\u5728\u3002\u6CA1\u5173\u7CFB\uFF0C\u6211\u63D0\u793A\u4E00\u4E0B\u4F60\u5E94\u8BE5\u5C31\u4F1A\u660E\u767D\u3002\u6BD4\u5982\uFF0C\u58F0\u660E\u4E00\u4E2A\u7528\u6237\u5BF9\u8C61\u8FD9\u4E2A\u5BF9\u8C61\u65E2\u6709 String \u7C7B\u578B\u7684\u540D\u79F0\uFF0C\u53C8\u6709 Int \u7C7B\u578B\u7684\u5E74\u9F84\u3002 Spring \u600E\u4E48\u77E5\u9053\u5C5E\u6027\u7684\u7C7B\u578B\u5462\uFF1F\u8FD9\u4E2A\u5C31\u662F Spring \u7684\u81EA\u52A8\u7C7B\u578B\u8F6C\u6362\u3002\u5173\u4E8E <a href=\"https:\/\/blog.csdn.net\/u012410733\/article\/details\/77116041\">Spring \u7684\u81EA\u52A8\u7C7B\u578B\u8F6C\u6362<\/a> \u6211\u5728\u4E4B\u524D\u5C31\u5DF2\u7ECF\u5206\u6790\u8FC7\u4E86\u3002<\/p>\n<h4 id=\"3-2-propertyeditorregistry\">3.2 PropertyEditorRegistry<\/h4>\n<p>\u8FD9\u4E2A\u63A5\u53E3\u4E3B\u8981\u7684\u4F5C\u7528\u662F\u6CE8\u518C\u5C5E\u6027\u4FEE\u6539\u5668(PropertyEditor)\uFF0C\u8FD9\u4E2A\u662F Java \u5185\u7701\u91CC\u9762\u7684\u673A\u5236\u3002<\/p>\n<pre><code>public interface PropertyEditorRegistry {\n\n    void registerCustomEditor(Class\u0026lt;?\u0026gt; requiredType, PropertyEditor propertyEditor);\n\n    void registerCustomEditor(Class\u0026lt;?\u0026gt; requiredType, String propertyPath, PropertyEditor propertyEditor);\n\n    PropertyEditor findCustomEditor(Class\u0026lt;?\u0026gt; requiredType, String propertyPath);\n\n}\n<\/code><\/pre><p>\u4E00\u822C\u901A\u8FC7\u7EE7\u627F  java.beans.PropertyEditorSupport \u6765\u5B9E\u73B0\u81EA\u5B9A\u4E49\u7684\u7C7B\u578B\u8F6C\u6362\u3002\u5728 Spring \u5185\u90E8\u6709\u5927\u91CF\u7684\u5B9E\u73B0\uFF0C\u5982\u4E0B\u56FE\u6240\u793A\uFF1A<\/p>\n<p><img src=\"https:\/\/img-blog.csdn.net\/20180419074121628?watermark\/2\/text\/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTI0MTA3MzM=\/font\/5a6L5L2T\/fontsize\/400\/fill\/I0JBQkFCMA==\/dissolve\/70\" alt=\"\u8FD9\u91CC\u5199\u56FE\u7247\u63CF\u8FF0\"><\/p>\n<h4 id=\"3-3-propertyaccessor\">3.3 PropertyAccessor<\/h4>\n<pre><code>public interface PropertyAccessor {\n\n    boolean isReadableProperty(String propertyName);\n\n    boolean isWritableProperty(String propertyName);\ncessor method failed\n\n    Class\u0026lt;?\u0026gt; getPropertyType(String propertyName) throws BeansException;\n\n    TypeDescriptor getPropertyTypeDescriptor(String propertyName) throws BeansException;\n\n    Object getPropertyValue(String propertyName) throws BeansException;\n\n    void setPropertyValue(String propertyName, Object value) throws BeansException;\n\n    void setPropertyValue(PropertyValue pv) throws BeansException;\n\n    void setPropertyValues(Map\u0026lt;?, ?\u0026gt; map) throws BeansException;\n\n    void setPropertyValues(PropertyValues pvs) throws BeansException;\n\n    void setPropertyValues(PropertyValues pvs, boolean ignoreUnknown)\n            throws BeansException;\n\n    void setPropertyValues(PropertyValues pvs, boolean ignoreUnknown, boolean ignoreInvalid)\n            throws BeansException;\n\n}\n<\/code><\/pre><p>PropertyAccessor \u8FD9\u4E2A\u63A5\u53E3\u662F\u5224\u65AD\u5BF9\u8C61\u4E2D\u7684\u67D0\u4E2A\u5C5E\u6027\u662F\u5426\u53EF\u8BFB\/\u53EF\u5199\uFF0C\u5E76\u4E14\u53EF\u4EE5\u5B9A\u5165\u6216\u8005\u8BFB\u53D6\u67D0\u4E2A\u5C5E\u6027\u7684\u503C\u3002\u4ECE\u8FD9\u4E2A\u63A5\u53E3\u5B9A\u4E49\u6211\u4EEC\u53EF\u4EE5\u770B\u51FA\uFF0C\u5B83\u7684\u4F7F\u7528\u5176\u5B9E\u5C31\u662F\u771F\u6B63\u7528\u6765\u4F9D\u8D56\u6CE8\u5165\u7684\u3002\u7136\u540E\u8C03\u7528\u5C5E\u6027\u64CD\u4F5C\u7684\u5199\u5165\u64CD\u4F5C\uFF0C\u5B8C\u5168\u4F9D\u8D56\u6CE8\u5165\u3002<\/p>\n<h4 id=\"3-4-configurablepropertyaccessor\">3.4 ConfigurablePropertyAccessor<\/h4>\n<pre><code>public interface ConfigurablePropertyAccessor extends PropertyAccessor, PropertyEditorRegistry, TypeConverter {\n\n    void setConversionService(ConversionService conversionService);\n\n    ConversionService getConversionService();\n\n    ...\n\n}\n<\/code><\/pre><p>\u8FD9\u4E2A\u63A5\u53E3\u7684\u529F\u80FD\u548C PropertyEditorRegistry \u63A5\u53E3\u4E00\u6837\uFF0C\u53EA\u4E0D\u8FC7\u540E\u8005\u662F\u901A\u8FC7 java \u5185\u7701\u6765\u8FDB\u884C\u7C7B\u578B\u81EA\u52A8\u8F6C\u6362\uFF0C\u800C ConfigurablePropertyAccessor \u63A5\u53E3\u662F\u901A\u8FC7 Spring \u81EA\u5DF1\u5B9A\u4E49\u7684 org.springframework.core.convert.ConversionService \u6765\u4F5C\u7C7B\u578B\u8F6C\u6362\u7C7B\u578B\u8F6C\u6362\u3002\u5728 Spring \u4E2D\u9ED8\u8BA4\u4F7F\u7528\u7684\u662F DefaultConversionService \u6765\u4F5C\u81EA\u52A8\u7C7B\u578B\u8F6C\u6362\u652F\u6301\uFF0C\u5E76\u4E14\u5185\u90E8\u8FD8\u6DFB\u52A0\u4E86\u5F88\u591A\u9ED8\u8BA4\u7684\u7C7B\u578B\u8F6C\u6362\u3002<\/p>\n<pre><code>public class DefaultConversionService extends GenericConversionService {\n\n    \/** Java 8\u0026#39;s java.util.Optional class available? *\/\n    private static final boolean javaUtilOptionalClassAvailable =\n            ClassUtils.isPresent(\u0026quot;java.util.Optional\u0026quot;, DefaultConversionService.class.getClassLoader());\n\n    \/** Java 8\u0026#39;s java.time package available? *\/\n    private static final boolean jsr310Available =\n            ClassUtils.isPresent(\u0026quot;java.time.ZoneId\u0026quot;, DefaultConversionService.class.getClassLoader());\n\n    \/** Java 8\u0026#39;s java.util.stream.Stream class available? *\/\n    private static final boolean streamAvailable = ClassUtils.isPresent(\n            \u0026quot;java.util.stream.Stream\u0026quot;, DefaultConversionService.class.getClassLoader());\n\n    public DefaultConversionService() {\n        addDefaultConverters(this);\n    }\n\n    public static void addDefaultConverters(ConverterRegistry converterRegistry) {\n        addScalarConverters(converterRegistry);\n        addCollectionConverters(converterRegistry);\n\n        converterRegistry.addConverter(new ByteBufferConverter((ConversionService) converterRegistry));\n        if (jsr310Available) {\n            Jsr310ConverterRegistrar.registerJsr310Converters(converterRegistry);\n        }\n\n        converterRegistry.addConverter(new ObjectToObjectConverter());\n        converterRegistry.addConverter(new IdToEntityConverter((ConversionService) converterRegistry));\n        converterRegistry.addConverter(new FallbackObjectToStringConverter());\n        if (javaUtilOptionalClassAvailable) {\n            converterRegistry.addConverter(new ObjectToOptionalConverter((ConversionService) converterRegistry));\n        }\n    }\n\n    public static void addCollectionConverters(ConverterRegistry converterRegistry) {\n        ConversionService conversionService = (ConversionService) converterRegistry;\n\n        converterRegistry.addConverter(new ArrayToCollectionConverter(conversionService));\n        converterRegistry.addConverter(new CollectionToArrayConverter(conversionService));\n\n        converterRegistry.addConverter(new ArrayToArrayConverter(conversionService));\n        converterRegistry.addConverter(new CollectionToCollectionConverter(conversionService));\n        converterRegistry.addConverter(new MapToMapConverter(conversionService));\n\n        converterRegistry.addConverter(new ArrayToStringConverter(conversionService));\n        converterRegistry.addConverter(new StringToArrayConverter(conversionService));\n\n        converterRegistry.addConverter(new ArrayToObjectConverter(conversionService));\n        converterRegistry.addConverter(new ObjectToArrayConverter(conversionService));\n\n        converterRegistry.addConverter(new CollectionToStringConverter(conversionService));\n        converterRegistry.addConverter(new StringToCollectionConverter(conversionService));\n\n        converterRegistry.addConverter(new CollectionToObjectConverter(conversionService));\n        converterRegistry.addConverter(new ObjectToCollectionConverter(conversionService));\n\n        if (streamAvailable) {\n            converterRegistry.addConverter(new StreamConverter(conversionService));\n        }\n    }\n\n    private static void addScalarConverters(ConverterRegistry converterRegistry) {\n        converterRegistry.addConverterFactory(new NumberToNumberConverterFactory());\n\n        converterRegistry.addConverterFactory(new StringToNumberConverterFactory());\n        converterRegistry.addConverter(Number.class, String.class, new ObjectToStringConverter());\n\n        converterRegistry.addConverter(new StringToCharacterConverter());\n        converterRegistry.addConverter(Character.class, String.class, new ObjectToStringConverter());\n\n        converterRegistry.addConverter(new NumberToCharacterConverter());\n        converterRegistry.addConverterFactory(new CharacterToNumberFactory());\n\n        converterRegistry.addConverter(new StringToBooleanConverter());\n        converterRegistry.addConverter(Boolean.class, String.class, new ObjectToStringConverter());\n\n        converterRegistry.addConverterFactory(new StringToEnumConverterFactory());\n        converterRegistry.addConverter(Enum.class, String.class,\n                new EnumToStringConverter((ConversionService) converterRegistry));\n\n        converterRegistry.addConverter(new StringToLocaleConverter());\n        converterRegistry.addConverter(Locale.class, String.class, new ObjectToStringConverter());\n\n        converterRegistry.addConverter(new StringToCharsetConverter());\n        converterRegistry.addConverter(Charset.class, String.class, new ObjectToStringConverter());\n\n        converterRegistry.addConverter(new StringToCurrencyConverter());\n        converterRegistry.addConverter(Currency.class, String.class, new ObjectToStringConverter());\n\n        converterRegistry.addConverter(new StringToPropertiesConverter());\n        converterRegistry.addConverter(new PropertiesToStringConverter());\n\n        converterRegistry.addConverter(new StringToUUIDConverter());\n        converterRegistry.addConverter(UUID.class, String.class, new ObjectToStringConverter());\n    }\n\n    private static final class Jsr310ConverterRegistrar {\n\n        public static void registerJsr310Converters(ConverterRegistry converterRegistry) {\n            converterRegistry.addConverter(new StringToTimeZoneConverter());\n            converterRegistry.addConverter(new ZoneIdToTimeZoneConverter());\n            converterRegistry.addConverter(new ZonedDateTimeToCalendarConverter());\n        }\n    }\n\n}\n<\/code><\/pre><p>\u5173\u4E8E <a href=\"https:\/\/blog.csdn.net\/u012410733\/article\/details\/77116041\">Spring \u7684\u81EA\u52A8\u7C7B\u578B\u8F6C\u6362<\/a> \u6211\u5728\u4E4B\u524D\u5C31\u5DF2\u7ECF\u5206\u6790\u8FC7\u4E86\u3002\u548C java \u5185\u7701\u7684\u539F\u7406\u662F\u4E00\u6837\u7684\u3002<\/p>\n<h4 id=\"3-5-beanwrapper\">3.5 BeanWrapper<\/h4>\n<pre><code>public interface BeanWrapper extends ConfigurablePropertyAccessor {\n\n    Object getWrappedInstance();\n\n    Class\u0026lt;?\u0026gt; getWrappedClass();\n\n    PropertyDescriptor[] getPropertyDescriptors();\n\n    PropertyDescriptor getPropertyDescriptor(String propertyName) throws InvalidPropertyException;\n\n    ...\n\n}\n<\/code><\/pre><p>\u8FD9\u4E2A\u63A5\u53E3\u5C31\u633A\u7B80\u5355\u4E86\uFF0C\u901A\u8FC7\u5B9E\u73B0\u4E86\u4E0A\u9762\u7684\u51E0\u4E2A\u63A5\u53E3\u5177\u6709\u4E86\u4F9D\u8D56\u6CE8\u5165\u3001\u7C7B\u578B\u8F6C\u6362\u6CE8\u518C(java \u5185\u7701\u6216\u8005 Spring \u81EA\u5B9A\u4E49\u7684 \u81EA\u52A8\u7C7B\u578B\u8F6C\u6362)\u3002\u7136\u540E\u8FD9\u4E2A\u63A5\u53E3\u7684\u4E3B\u8981\u7684\u4F5C\u7528\u5C31\u662F\u901A\u8FC7\u8C03\u7528 <code>getWrappedInstance<\/code> \u65B9\u6CD5\u83B7\u53D6\u5230\u5F53\u524D\u5B9E\u4F8B\u5BF9\u8C61\uFF0C\u63D0\u4F9B\u7ED9\u5C5E\u6027\u7684 writer \u65B9\u6CD5\u8FDB\u884C\u4F9D\u8D56\u6CE8\u5165\u3002<\/p>\n<pre><code>writeMethod.invoke(getWrappedInstance(), value);\n<\/code><\/pre><h3 id=\"4-\">4\u3001\u603B\u7ED3<\/h3>\n<p>\u8BA9\u6211\u4EEC\u518D\u6765\u770B\u4E00\u4E0B Spring \u7684\u5BF9\u8C61\u626D\u8F6C\u8FC7\u8FC7\u7A0B\uFF1A<\/p>\n<blockquote>\n<p>Resource -\u0026gt; BeanDefinition -\u0026gt; BeanWrapper -\u0026gt; Object<\/p>\n<\/blockquote>\n<p>\u76F8\u4FE1\u57FA\u4E8E\u4EE5\u4E0A\u7684\u8BB2\u89E3\uFF0C\u5927\u5BB6\u5BF9\u4E8E\u4E0A\u9762\u7684\u8FC7\u7A0B\u80FD\u591F\u7406\u89E3 Spring IOC \u7684\u9879\u76EE\u8FC7\u7A0B\u3002\u5728 Spring \u8FDB\u884C \u4F9D\u8D56\u6CE8\u5165\u7684\u65F6\u5019\uFF0C\u9996\u5148\u628A\u8FD9\u79CD\u8D44\u6E90\u8F6C\u5316\u6210 Resource \u62BD\u8C61\uFF0C\u901A\u8FC7\u91CC\u9762\u7684 IO \u6D41\u8BFB\u53D6\u5B9A\u4E49\u7684 bean\u3002\u7136\u540E\u518D\u8F6C\u5316\u6210 BeanDefinitioin\uFF0C\u91CC\u9762\u5B9A\u4E49\u4E86\u5305\u62EC\u6784\u9020\u5668\u6CE8\u5165\uFF0C\u4EE5\u53CA setter \u6CE8\u5165\u7684\u5B9A\u4E49\u3002\u6700\u540E\u901A\u8FC7 BeanWrapper \u8FD9\u4E2A\u63A5\u53E3\uFF0C\u9996\u5148\u83B7\u53D6\u5B9A\u4E49\u7684\u6784\u9020\u5668\u6CE8\u5165\u5C5E\u6027\uFF0C\u901A\u8FC7\u53CD\u5C04\u4E2D\u7684 Constructor \u6765\u521B\u5EFA\u5BF9\u8C61\u3002\u57FA\u4E8E\u8FD9\u4E2A\u5BF9\u8C61\uFF0C\u901A\u8FC7 java \u91CC\u9762\u7684\u5185\u7701\u673A\u5236\u83B7\u53D6\u5230\u5B9A\u4E49\u5C5E\u6027\u7684\u5C5E\u6027\u63CF\u8FF0\u5668(PropertyDescriptor)\uFF0C\u8C03\u7528\u5C5E\u6027\u7684\u5199\u5165\u65B9\u6CD5\u5B8C\u6210\u4F9D\u8D56\u6CE8\u5165\uFF0C\u6700\u540E\u518D\u8C03\u7528 Spring \u7684\u81EA\u5B9A\u4E49\u521D\u59CB\u5316\u903B\u8F91\uFF0C\u4E3B\u8981\u5305\u62EC\u4EE5\u4E0B\u4E8C\u4E2A\u6269\u5C55\uFF1A<\/p>\n<ul>\n<li>BeanPostProcess\uFF0CSpring aop \u5C31\u662F\u57FA\u4E8E\u6B64\u6269\u5C55\u3002<\/li>\n<li>Init-method\uFF0C\u53EF\u4EE5\u5728 <code>bean<\/code> \u6807\u7B7E\u901A\u8FC7 init-method \u5B9A\u4E49\uFF0C\u4E5F\u53EF\u4EE5\u5B9E\u73B0 InitializingBean<\/li>\n<li>XXXAware\uFF0CSpring \u5BB9\u5668\u611F\u77E5\u7C7B\uFF0C\u53EF\u4EE5\u5728 bean \u91CC\u9762\u83B7\u53D6\u5230 Spring \u5BB9\u5668\u7684\u5185\u90E8\u5C5E\u6027\u3002<\/li>\n<\/ul>\n<p>\u5E0C\u671B\u901A\u8FC7\u8FD9\u7BC7\u6587\u7AE0\uFF0C\u5927\u5BB6\u5BF9 Spring IOC \u6709\u4E00\u4E2A\u5B8F\u89C2\u4E0A\u9762\u7684\u8BA4\u8BC6\u3002\u8FD9\u6837\u5C31\u4E0D\u4F1A\u5728\u590D\u6742\u6E90\u7801\u7684\u903B\u8F91\u4E2D\u8FF7\u5931\u3002<\/p>\n","updateTime":"2018-04-19 10:42:26.0"},
+            isAttention: false,
+            isLike: false,
+            comments: null,
+            currentCommentId: 0,
+            content: '',
+            pageIndex: 1
+        },
+        methods: {
+            onAttention: function () {
+                checkLogin();
+                $.post("/user/api/attention",
+                    {
+                        "otherId": authorId
+                    },
+                    function (response) {
+                        if (response.code === 0) {
+                            app.isAttention = !app.isAttention;
+                        }
+                    }
+                );
+
+            },
+            onLike: function (){
+                checkLogin();
+                $.post(this.requestAPI.like,
+                    {
+                        "articleId": articleId,
+                        "questionId": articleId
+                    },
+                    function (response) {
+                        if (response.code === 0) {
+                            app.isLike = !app.isLike;
+                            if(app.isLike){
+                                app.article.like++;
+                            }else {
+                                app.article.like--;
+                            }
+                        }
+                    }
+                );
+            },
+            onCommentDelete: function (commentId) {
+                $.post(this.requestAPI.deleteAPI,
+                    {
+                        "id": commentId
+                    },
+                    function (response) {
+                        if (response.code === 0) {
+                            for (var i = 0; i < app.comments.list.length; i++){
+                                if (app.comments.list[i].id === commentId){
+                                    app.comments.list.splice(i,1);
+                                }
+                            }
+                            app.article.comment--;
+                        }
+                    }
+                );
+            },
+            onReply: function(commentId){
+                checkLogin();
+                this.currentCommentId = commentId;
+                $('#replyModal').modal('show');
+            },
+            onReplySubmit: function(){
+                $('#replyModal').modal('hide');
+                $.post('/user/api/reply',
+                    {
+                        "type": type,
+                        "commentId": this.currentCommentId,
+                        "content": this.content
+                    },
+                    function(response){
+                        if(response.code === 0){
+                            var reply = {
+                                commentId: app.currentCommentId,
+                                avatar: user.avatar,
+                                content: app.content,
+                                createTime: new Date().getTime(),
+                                nickname: user.nickname,
+                                userId: user.id
+                            };
+                            for (var i = 0; i < app.comments.list.length; i++){
+                                if (app.comments.list[i].id === app.currentCommentId){
+                                    if (!app.comments.list[i].replyList){
+                                        app.comments.list[i].replyList = [];
+                                    }
+                                    app.comments.list[i].replyList.push(reply);
+                                }
+                            }
+                            app.content = '';
+                        }
+                    }
+                );
+            },
+            // 仅问答有效
+            onSupport: function (answerId, status){
+                checkLogin();
+                $.post("/user/api/answer/support",
+                    {
+                        answerId: answerId,
+                        supportStatus: status
+                    },
+                    function (response) {
+                        if (response.code === 0) {
+                            for (var i = 0; i < app.comments.list.length; i++){
+                                if (app.comments.list[i].id === answerId){
+                                    app.comments.list[i].supported = true;
+                                    if(status === 1){
+                                        app.comments.list[i].support++;
+                                    }else {
+                                        app.comments.list[i].support--;
+                                    }
+                                    app.comments.list.splice(i,0);
+                                }
+                            }
+                        }
+                    }
+                );
+            },
+            nextPage: function () {
+                this.pageIndex = this.pageIndex + 1;
+            }
+        },
+        computed: {
+            requestAPI: function (){
+                // 文章
+                if(type === 0){
+                    return {
+                        like: '/user/api/like/article',
+                        comment: '/user/api/comment',
+                        commentData: "/common/article/" + articleId + "/comments/" + this.pageIndex + "?order=2",
+                        deleteAPI: '/user/api/comment/delete'
+                    };
+                }
+                // 问答
+                if (type === 1){
+                    return {
+                        like: '/user/api/like/question',
+                        comment: '/user/api/answer',
+                        commentData: "/common/question/" + articleId + "/answers/" + this.pageIndex,
+                        deleteAPI: '/user/api/answer/delete'
+                    };
+                }
+            },
+            commentData: function (){
+                var result = null;
+                $.get(this.requestAPI.commentData, function (response) {
+                    result = response.data;
+                });
+                if (this.comments !== null) {
+                    this.comments.pageNum = result.pageNum;
+                    this.comments.pages = result.pages;
+                    for (var i = 0; i < result.list.length; i++) {
+                        this.comments.list.push(result.list[i]);
+                    }
+                } else {
+                    this.comments = result;
+                }
+                return this.comments;
+            },
+            authorArticle: function (){
+                var result = null;
+                $.get('/common/'+this.article.userId+'/articles/1', function (response) {
+                    result = response.data;
+                });
+                return result;
+            },
+            recommendArticle: function (){
+                var result = null;
+                $.get('/common/article/recommend?tag=' + this.article.tag, function (response) {
+                    result = response.data;
+                });
+                return result;
+            }
+
+        }
+    });
+
+    $(document).ready(function(){
+        if (user !== null) {
+            $.get('/user/api/attention/' + authorId, function (response) {
+                if (response.code === 0) {
+                    app.isAttention = (response.data.status > 0);
+                }
+            });
+            $.get(app.requestAPI.like + '/' + articleId, function (response) {
+                if (response.code === 0) {
+                    app.isLike = response.data;
+                }
+            });
+        }
+
+        $('#comment-submit').click(function(){
+            checkLogin();
+            if(!checkAnswerParams()){
+                $.post(app.requestAPI.comment,
+                    {
+                        questionId: articleId,
+                        articleId: articleId,
+                        contentMd: simplemde.value(),
+                        contentHtml: simplemde.markdown(simplemde.value())
+                    },
+                    function (response) {
+                        if (response.code === 0) {
+                            var comment = {
+                                articleId: articleId,
+                                avatar: user.avatar,
+                                contentHtml: simplemde.markdown(simplemde.value()),
+                                createTime: new Date().getTime(),
+                                nickname: user.nickname,
+                                userId: user.id,
+                                id: response.data
+                            };
+                            app.comments.list.splice(0, 0, comment);
+                            simplemde.value('');
+                            app.article.comment++;
+                        }
+                    }
+                );
+            }
+        });
+    });
+
+    // 检查回答的字数
+    function checkAnswerParams(){
+        return simplemde.value().trim().length === 0;
+    }
+
