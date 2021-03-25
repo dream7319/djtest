@@ -30,7 +30,7 @@ psutil==5.4.3
 pymysql==0.8.0
 python-dateutil==2.6.1
 pytz==2017.3
-PyYAML==3.12
+PyYAML==5.4
 redis==2.10.6
 requests==2.18.4
 rrule34==1.0.0
